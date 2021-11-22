@@ -34,7 +34,7 @@ variable "managed_disk_config" {
   default = [
 
     {
-      name                 = di1
+      name                 = "di1"
       storage_account_type = "Standard_LRS"
       disk_size_gb         = 10
       lun                  = "10"

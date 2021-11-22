@@ -39,7 +39,7 @@ resource "azurerm_linux_virtual_machine" "linux_vm" {
   computer_name                   = var.vm_computer_name
   admin_username                  = var.vm_admin_username
   admin_password                  = random_password.password.result
-  disable_password_authentication = false
+  disable_password_authentication = true
   custom_data                     = var.custom_data
   tags                            = var.common_tags
 }

@@ -17,9 +17,9 @@ triggers = {always_run = "${timestamp()}"}
     agent       = false
   }
   provisioner "local-exec" {
-    command = "ansible-playbook -i ${azurerm_network_interface.vm_nic.private_ip_address}, --private-key ${var.private_key} ${path.module}/ansible/azcli.yml -u ${var.vm_admin_username}"
+    command = "ansible-playbook -i ${azurerm_network_interface.vm_nic.private_ip_address}, --private-key ${var.private_key} ${path.module}/ansible/azcli.yml -u ${var.vm_admin_username} --extra-vars "ansible_user="${var.vm_admin_username}" ansible_passowrd="${random_password.password.result}""
   }
-  depends_on = [azurerm_linux_virtual_machine.linux_vm]
+  depends_on = [module.disk]
 }
 
 
@@ -51,6 +51,7 @@ resource "null_resource" "packages_download" {
 }
 
 resource "null_resource" "install_package1" {
+triggers = {always_run = "${timestamp()}"}
   provisioner "remote-exec" {
     inline = [
       "echo 'build ssh connection' "

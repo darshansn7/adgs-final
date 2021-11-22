@@ -1,9 +1,7 @@
-
-
-variable "vm_key" {
-  type        = string
-  description = "vm-key"
-  default     = ""
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "!#&)/?_%@"
 }
 ################################################
 # Create keypair (generate if needed)
@@ -52,7 +50,7 @@ data "local_file" "private_key" {
 locals {
   public_key  = var.vm_key == "" ? data.local_file.public_key[0].content : var.vm_key
   private_key = var.vm_key == "" ? data.local_file.private_key[0].content : var.vm_key
-  vm_name     = "vm_key"
+  vm_name     = var.vm_key_name
 }
 
 resource "azurerm_ssh_public_key" "main" {
